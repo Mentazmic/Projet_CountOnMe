@@ -36,4 +36,22 @@ class CalculatorTestCase: XCTestCase {
 
         XCTAssertEqual(calculator.result, 5)
     }
+
+    func testGivenUserPressingEqual_WhenTenIsDividedByTwo_ThenResultShouldBeFive() {
+        calculator.addElement(number: 10)
+        calculator.addOperator(calcOperator: "/")
+        calculator.addElement(number: 2)
+        calculator.tappedEqualButton()
+
+        XCTAssertEqual(calculator.result, 5)
+    }
+
+    func testGivenUserPressingEqual_WhenTenIsMultipliedByFive_ThenResultShouldBeFifty() {
+        calculator.addElement(number: 10)
+        calculator.addOperator(calcOperator: "*")
+        calculator.addElement(number: 5)
+        calculator.tappedEqualButton()
+
+        XCTAssertEqual(calculator.result, 50)
+    }
 }

@@ -54,11 +54,15 @@ class ViewController: UIViewController {
         }
         
         textView.text.append(numberText)
+
+        let numberTextToNumberInt = Int(numberText) ?? 0
+        calculator.addElement(number: numberTextToNumberInt)
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
         if canAddOperator {
             textView.text.append(" + ")
+            calculator.addOperator(calcOperator: " + ")
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -69,6 +73,7 @@ class ViewController: UIViewController {
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
         if canAddOperator {
             textView.text.append(" - ")
+            calculator.addOperator(calcOperator: " - ")
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -79,6 +84,7 @@ class ViewController: UIViewController {
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
         if canAddOperator {
             textView.text.append(" * ")
+            calculator.addOperator(calcOperator: " * ")
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -89,6 +95,7 @@ class ViewController: UIViewController {
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
         if canAddOperator {
             textView.text.append(" / ")
+            calculator.addOperator(calcOperator: " / ")
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -132,6 +139,8 @@ class ViewController: UIViewController {
 //        }
         
         //textView.text.append(" = \(operationsToReduce.first!)")
+        calculator.tappedEqualButton()
+        textView.text.append(" = \(calculator.result)")
     }
 
 }

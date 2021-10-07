@@ -34,7 +34,7 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 2)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, 5)
+        XCTAssertEqual(calculator.result, "5")
     }
 
     func testGivenUserPressingEqual_WhenTenIsDividedByTwo_ThenResultShouldBeFive() {
@@ -43,15 +43,16 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 2)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, 5)
+        XCTAssertEqual(calculator.result, "5")
     }
 
-    func testGivenUserPressingEqual_WhenTenIsMultipliedByFive_ThenResultShouldBeFifty() {
-        calculator.addElement(number: 10)
+    func testGivenUserPressingEqual_WhenTwoIsMultipliedByTen_ThenResultShouldBeTwenty() {
+        calculator.addElement(number: 2)
         calculator.addOperator(calcOperator: "*")
-        calculator.addElement(number: 5)
+        calculator.addElement(number: 1)
+        calculator.addElement(number: 0)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, 50)
+        XCTAssertEqual(calculator.result, "20")
     }
 }

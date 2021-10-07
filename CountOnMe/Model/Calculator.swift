@@ -15,15 +15,29 @@ class Calculator {
     func addElement(number: Int) {
 
         //int to string
-        let elementStringToNumber = String(number)
-        elements.append(elementStringToNumber)
+        let elementsStringToNumber = String(number)
+
+        // Pour "testGivenUserPressingEqual_WhenTwoIsMultipliedByTen_ThenResultShouldBeTwenty()"
+
+        // elements.last -> vérifier si c'est un opérateur (condition) -> element.append sur saisie
+        // else:
+        // stocker le 1 et 0 dans une variable intermediaire
+        // elements.last + elementsStringToNumber
+        // effacer le 1 de la liste
+        // ajouter le 10 à la liste
+
+        // saisie opérateur : elements.last -> si opérateur -> erreur
+
+        //        let elementsSplittedString = elementsStringToNumber.split(separator: "+", omittingEmptySubsequences: false)
+        //        elements.append(elementsSplittedString)
+        elements.append(elementsStringToNumber)
     }
 
     func addOperator(calcOperator: String) {
         elements.append(calcOperator)
     }
 
-    
+
     func tappedEqualButton() {
 
         // Create local copy of operations
@@ -48,11 +62,21 @@ class Calculator {
             
         }
 
-        //string to float
-        let operationsStringToFloat = operationsToReduce.first!
-        result = Float(operationsStringToFloat)!
+        //Créer une fonction || extension de float qui renverrait un string
+        let operationsValue = Float(operationsToReduce.first!)!
+
+        var formattedValue = String(format: "%.5f", operationsValue)
+
+        while formattedValue.last == "0" {
+            formattedValue.removeLast()
+        }
+        if formattedValue.last == "." {
+            formattedValue.removeLast()
+        }
+
+        result = formattedValue
+
     }
 
-
-    var result: Float = 0
+    var result: String = "0"
 }

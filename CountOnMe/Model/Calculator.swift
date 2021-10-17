@@ -9,32 +9,41 @@
 import Foundation
 
 class Calculator {
+    // MARK: - Properties
 
     var elements: [String] = []
+
+    // MARK: - Functions
 
     func addElement(number: Int) {
 
         //int to string
         let elementsStringToNumber = String(number)
 
-        // Pour "testGivenUserPressingEqual_WhenTwoIsMultipliedByTen_ThenResultShouldBeTwenty()"
-
-        // elements.last -> vérifier si c'est un opérateur (condition) -> element.append sur saisie
-        // else:
-        // stocker le 1 et 0 dans une variable intermediaire
-        // elements.last + elementsStringToNumber
-        // effacer le 1 de la liste
-        // ajouter le 10 à la liste
+        if elements.last == "+" || elements.last == "-" || elements.last == "*" || elements.last == "/" || elements.last == nil {
+            elements.append(elementsStringToNumber)
+        } else {
+            let value1 = elements.last
+            let value2 = elementsStringToNumber
+            let finalValue = value1! + value2
+            elements.removeLast()
+            elements.append(finalValue)
+        }
 
         // saisie opérateur : elements.last -> si opérateur -> erreur
 
-        //        let elementsSplittedString = elementsStringToNumber.split(separator: "+", omittingEmptySubsequences: false)
-        //        elements.append(elementsSplittedString)
-        elements.append(elementsStringToNumber)
+//        let elementsSplittedString = elementsStringToNumber.split(separator: "/", omittingEmptySubsequences: false)
+//        elements.append(elementsSplittedString)
+
+    }
+    var canAddOperator: Bool {
+        return elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"
     }
 
     func addOperator(calcOperator: String) {
-        elements.append(calcOperator)
+        if canAddOperator {
+            elements.append(calcOperator)
+        }
     }
 
 
@@ -63,20 +72,17 @@ class Calculator {
         }
 
         //Créer une fonction || extension de float qui renverrait un string
-        let operationsValue = Float(operationsToReduce.first!)!
-
-        var formattedValue = String(format: "%.5f", operationsValue)
-
-        while formattedValue.last == "0" {
-            formattedValue.removeLast()
-        }
-        if formattedValue.last == "." {
-            formattedValue.removeLast()
-        }
-
-        result = formattedValue
+       let operationsValue = Float(operationsToReduce.first!)!
+        result = operationsValue.clean
 
     }
 
     var result: String = "0"
+}
+// MARK: - Extension
+
+extension Float {
+    var clean: String {
+       return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
+    }
 }

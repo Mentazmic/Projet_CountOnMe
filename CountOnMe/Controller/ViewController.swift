@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     
     // Error check computed variables
     var expressionIsCorrect: Bool {
-        return calculator.elements.last != "+" && calculator.elements.last != "-"
+        return calculator.elements.last != "+" && calculator.elements.last != "-" && calculator.elements.last != "*" && calculator.elements.last != "/"
     }
     
     var expressionHaveEnoughElement: Bool {

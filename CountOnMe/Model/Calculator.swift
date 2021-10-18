@@ -81,10 +81,10 @@ class Calculator {
         //Créer une fonction || extension de float qui renverrait un string
         let operationsValue = Float(operationsToReduce.first!)!
 
-        result = operationsValue.clean
+        finalResult = operationsValue.clean
     }
 
-    var result: String = "0"
+    var finalResult: String = "0"
 }
 // MARK: - Extension
 

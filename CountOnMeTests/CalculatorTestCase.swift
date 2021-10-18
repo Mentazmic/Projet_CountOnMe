@@ -34,7 +34,7 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 2)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, "5")
+        XCTAssertEqual(calculator.finalResult, "5")
     }
 
     func testGivenUserPressingEqual_WhenTenIsDividedByTwo_ThenResultShouldBeFive() {
@@ -43,7 +43,7 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 2)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, "5")
+        XCTAssertEqual(calculator.finalResult, "5")
     }
 
     func testGivenUserPressingEqual_WhenTwoIsMultipliedByTen_ThenResultShouldBeTwenty() {
@@ -53,7 +53,7 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 0)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, "20")
+        XCTAssertEqual(calculator.finalResult, "20")
     }
 
     func testGivenUserPressingEqual_WhenTenThousandIsMultipliedByFiveHundred_ThenResultShouldBeFiveMillions() {
@@ -62,7 +62,7 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 500)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, "5000000")
+        XCTAssertEqual(calculator.finalResult, "5000000")
     }
 
     func testGivenUserPressingEqual_WhenTenIsAddedToSeventyNineAndAddedToThirtyOne_ThenResultShouldBeAHundredAndTwenty() {
@@ -73,7 +73,7 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 31)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, "120")
+        XCTAssertEqual(calculator.finalResult, "120")
     }
 
     func testGivenUserPressingEqual_WhenFiveIsDividedByTwo_ThenResultShouldBeTwoAndAHalf() {
@@ -82,7 +82,7 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 2)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, "2.5")
+        XCTAssertEqual(calculator.finalResult, "2.5")
     }
 
     func testGivenPressingEqual_WhenTwoIsAddedToTwelveMultipliedByFifty_ThenResultShouldBeSixHundredAndOne() {
@@ -93,7 +93,7 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 50)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, "602")
+        XCTAssertEqual(calculator.finalResult, "602")
     }
 
     func testGivenPressingEqual_WhenTwelveIsMultipliedAndThenDividedByFive_ThenTheProgramShouldReturnAnError () {

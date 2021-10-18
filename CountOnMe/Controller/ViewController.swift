@@ -101,7 +101,7 @@ class ViewController: UIViewController {
         }
 
         calculator.tappedEqualButton()
-        textView.text.append(" = \(calculator.result)")
+        textView.text.append(" = \(calculator.finalResult)")
     }
 
 }

@@ -13,12 +13,12 @@ class Calculator {
 
     var elements: [String] = []
 
+
     // MARK: - Functions
 
-    func addElement(number: Int) {
+    func addElement(number: Float) {
 
-        //int to string
-        let elementsStringToNumber = String(number)
+        let elementsStringToNumber = number.clean
 
         if elements.last == "+" || elements.last == "-" || elements.last == "*" || elements.last == "/" || elements.last == nil {
             elements.append(elementsStringToNumber)
@@ -32,10 +32,18 @@ class Calculator {
 
         // saisie opérateur : elements.last -> si opérateur -> erreur
 
-//        let elementsSplittedString = elementsStringToNumber.split(separator: "/", omittingEmptySubsequences: false)
-//        elements.append(elementsSplittedString)
+        //        let elementsSplittedString = elementsStringToNumber.split(separator: "/", omittingEmptySubsequences: false)
+        //        elements.append(elementsSplittedString)
 
     }
+    var expressionIsCorrect: Bool {
+        return elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"
+    }
+
+    var expressionHaveEnoughElement: Bool {
+        return elements.count >= 3
+    }
+
     var canAddOperator: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"
     }
@@ -46,18 +54,18 @@ class Calculator {
         }
     }
 
-
     func tappedEqualButton() {
 
         // Create local copy of operations
         var operationsToReduce = elements
 
         while operationsToReduce.count > 1 {
-            let left = Int(operationsToReduce[0])!
+            let left = Float(operationsToReduce[0])!
             let operand = operationsToReduce[1]
-            let right = Int(operationsToReduce[2])!
+            let right = Float(operationsToReduce[2])!
 
-            let result: Int
+            let result: Float
+
             switch operand {
             case "+": result = left + right
             case "-": result = left - right
@@ -68,13 +76,12 @@ class Calculator {
 
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
-            
         }
 
         //Créer une fonction || extension de float qui renverrait un string
-       let operationsValue = Float(operationsToReduce.first!)!
-        result = operationsValue.clean
+        let operationsValue = Float(operationsToReduce.first!)!
 
+        result = operationsValue.clean
     }
 
     var result: String = "0"
@@ -83,6 +90,6 @@ class Calculator {
 
 extension Float {
     var clean: String {
-       return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
+        return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
     }
 }

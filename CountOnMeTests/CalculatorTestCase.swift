@@ -65,13 +65,24 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(calculator.result, "5000000")
     }
 
+    func testGivenUserPressingEqual_WhenTenIsAddedToSeventyNineAndAddedToThirtyOne_ThenResultShouldBeAHundredAndTwenty() {
+        calculator.addElement(number: 10)
+        calculator.addOperator(calcOperator: "+")
+        calculator.addElement(number: 79)
+        calculator.addOperator(calcOperator: "+")
+        calculator.addElement(number: 31)
+        calculator.tappedEqualButton()
+
+        XCTAssertEqual(calculator.result, "120")
+    }
+
     func testGivenUserPressingEqual_WhenFiveIsDividedByTwo_ThenResultShouldBeTwoAndAHalf() {
         calculator.addElement(number: 5)
         calculator.addOperator(calcOperator: "/")
         calculator.addElement(number: 2)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.result, "2,5")
+        XCTAssertEqual(calculator.result, "2.5")
     }
 
     func testGivenPressingEqual_WhenTwoIsAddedToTwelveMultipliedByFifty_ThenResultShouldBeSixHundredAndOne() {

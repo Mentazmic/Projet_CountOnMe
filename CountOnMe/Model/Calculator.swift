@@ -13,6 +13,8 @@ class Calculator {
 
     var elements: [String] = []
 
+    var finalResult: String = "0"
+
 
     // MARK: - Functions
 
@@ -83,8 +85,6 @@ class Calculator {
 
         finalResult = operationsValue.clean
     }
-
-    var finalResult: String = "0"
 }
 // MARK: - Extension
 
@@ -93,3 +93,57 @@ extension Float {
         return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
     }
 }
+
+// MARK: - TODO
+/*
+
+func calculateTotal() -> Double {
+  var total: Double = 0
+  for (i, stringNumber) in stringNumbers.enumerated() {
+    if let number = Double(stringNumber) {
+      switch operators[i] {
+      case "÷":
+        total /= number
+      case "×":
+        total *= number
+      default:
+        break
+      }
+      //Remove the number from the array and make another for loop with the sum and subtract operations.
+
+    }
+  }
+  clear()
+  return total
+}
+
+ func calculateTotal() -> Double {
+   var total: Double = 0
+   for (i, stringNumber) in stringNumbers.enumerated() {
+     if let number = Double(stringNumber) {
+       switch operators[i] {
+       case "÷":
+         total /= number
+       case "×":
+         total *= number
+       default:
+         break
+       }
+     for (i, stringNumber) in stringNumbers.enumerated() {
+       if let number = Double(stringNumber) {
+         switch operators[i] {
+         case "+":
+           total /= number
+         case "-":
+           total *= number
+         default:
+           break
+         }
+
+     }
+   }
+   clear()
+   return total
+ }
+
+ */

@@ -76,6 +76,17 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(calculator.finalResult, "120")
     }
 
+    func testGivenUserPressingEqual_WhenSeventyFiveIsMultipliedByThirtyAndMultipliedByAHundred_ThenResultShouldBeFourThousandAndFiveHundred() {
+        calculator.addElement(number: 75)
+        calculator.addOperator(calcOperator: "*")
+        calculator.addElement(number: 30)
+        calculator.addOperator(calcOperator: "*")
+        calculator.addElement(number: 2)
+        calculator.tappedEqualButton()
+
+        XCTAssertEqual(calculator.finalResult, "4500")
+    }
+
     func testGivenUserPressingEqual_WhenFiveIsDividedByTwo_ThenResultShouldBeTwoAndAHalf() {
         calculator.addElement(number: 5)
         calculator.addOperator(calcOperator: "/")
@@ -83,6 +94,30 @@ class CalculatorTestCase: XCTestCase {
         calculator.tappedEqualButton()
 
         XCTAssertEqual(calculator.finalResult, "2.5")
+    }
+
+    func testGivenUserPressingEqual_WhenFiveIsMultipliedByTwoThenDividedByTwo_ThenResultShouldBeFive() {
+        calculator.addElement(number: 5)
+        calculator.addOperator(calcOperator: "*")
+        calculator.addElement(number: 2)
+        calculator.addOperator(calcOperator: "/")
+        calculator.addElement(number: 2)
+        calculator.tappedEqualButton()
+
+        XCTAssertEqual(calculator.finalResult, "5")
+    }
+
+    func testGivenUserPressingEqual_WhenFiveIsMultipliedByTwoThenAddedToSixMltipliedByThree_ThenResultShouldBeTwentyeight() {
+        calculator.addElement(number: 5)
+        calculator.addOperator(calcOperator: "*")
+        calculator.addElement(number: 2)
+        calculator.addOperator(calcOperator: "+")
+        calculator.addElement(number: 6)
+        calculator.addOperator(calcOperator: "*")
+        calculator.addElement(number: 3)
+        calculator.tappedEqualButton()
+
+        XCTAssertEqual(calculator.finalResult, "28")
     }
 
     func testGivenPressingEqual_WhenTwoIsAddedToTwelveMultipliedByFifty_ThenResultShouldBeSixHundredAndOne() {

@@ -10,16 +10,16 @@ import Foundation
 
 class Calculator {
     // MARK: - Properties
-
     var elements: [String] = []
 
     var finalResult: String = "0"
+    var equalIsPressed: Bool = false
 
 
     // MARK: - Functions
 
     func addElement(number: Float) {
-
+        
         let elementsStringToNumber = number.clean
 
         if elements.last == "+" || elements.last == "-" || elements.last == "*" || elements.last == "/" || elements.last == nil {
@@ -33,10 +33,6 @@ class Calculator {
         }
 
         // saisie opérateur : elements.last -> si opérateur -> erreur
-
-        //        let elementsSplittedString = elementsStringToNumber.split(separator: "/", omittingEmptySubsequences: false)
-        //        elements.append(elementsSplittedString)
-
     }
     var expressionIsCorrect: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"
@@ -60,10 +56,13 @@ class Calculator {
 
         // Create local copy of operations
         var operationsToReduce = elements
+
         var total : Float = 0
+
         var leftIndex = 0
         var operatorIndex = 1
         var rightIndex = 2
+
         while rightIndex < operationsToReduce.count {
             // Le checker sert à vérifier si l'opération est une multiplication, une division ou non.
             var checker = false
@@ -71,6 +70,10 @@ class Calculator {
             let left = Float(operationsToReduce[leftIndex])!
             let operand = operationsToReduce[operatorIndex]
             let right = Float(operationsToReduce[rightIndex])!
+
+            //Vérifier si les index impairs contiennent un operateur
+
+
             var result: Float = 0
             switch operand {
             case "/": result = left / right
@@ -101,6 +104,7 @@ class Calculator {
 
         // On entame le calcul des opérations et des soustractions
         while operationsToReduce.count > 1 {
+            
             let left = Float(operationsToReduce[0])!
             let operand = operationsToReduce[1]
             let right = Float(operationsToReduce[2])!
@@ -109,14 +113,24 @@ class Calculator {
             switch operand {
             case "+": result = left + right
             case "-": result = left - right
-            default: break
+            default: fatalError("Unknown operator !")
             }
             // Total va récupérer l'ensemble des résultats et les additionner.
-            total += result
-            operationsToReduce = Array(operationsToReduce.dropFirst(3))
+
+            operationsToReduce = Array(operationsToReduce.dropFirst(2))
+            operationsToReduce[0] = result.clean
+            total = result
         }
         finalResult = total.clean
+        //equalIsPressed = true
     }
+
+    //Si le prochain input après un calcul est un chiffre, vider le tableau, sinon continuer
+//    func emptyArray() {
+//        while equalIsPressed == true {
+//            if elements[2]
+//        }
+//    }
 }
 // MARK: - Extension
 
@@ -126,37 +140,3 @@ extension Float {
     }
 }
 
-// MARK: - TODO
-/*
-
- func calculateTotal() -> Double {
- var total: Double = 0
- for (i, stringNumber) in stringNumbers.enumerated() {
- if let number = Double(stringNumber) {
- switch operators[i] {
- case "÷":
- total /= number
- case "×":
- total *= number
- default:
- break
- }
- //Remove the number from the array and make another for loop with the sum and subtract operations.
- for (i, stringNumber) in stringNumbers.enumerated() {
- if let number = Double(stringNumber) {
- switch operators[i] {
- case "+":
- total /= number
- case "-":
- total *= number
- default:
- break
- }
-
- }
- }
- clear()
- return total
- }
-
- */

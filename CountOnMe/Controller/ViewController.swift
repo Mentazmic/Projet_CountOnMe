@@ -102,13 +102,9 @@ class ViewController: UIViewController {
 
         calculator.tappedEqualButton()
         textView.text.append(" = \(calculator.finalResult)")
+
     }
 
 }
-
-prefix operator +
-prefix operator -
-prefix operator /
-prefix operator *
 
 

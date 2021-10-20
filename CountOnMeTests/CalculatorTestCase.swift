@@ -28,7 +28,7 @@ class CalculatorTestCase: XCTestCase {
 
     // MARK: - Tests
 
-    func testGivenUserPressingEqual_WhenTwoIsAddedToThree_ThenResultShouldBeTwo() {
+    func testGivenUserPressingEqual_WhenTwoIsAddedToThree_ThenResultShouldBeFive() {
         calculator.addElement(number: 3)
         calculator.addOperator(calcOperator: "+")
         calculator.addElement(number: 2)
@@ -74,6 +74,19 @@ class CalculatorTestCase: XCTestCase {
         calculator.tappedEqualButton()
 
         XCTAssertEqual(calculator.finalResult, "120")
+    }
+
+    func testGivenUserPressingEqual_WhenTenIsAddedToSeventyNineAndAddedToThirtyOneThenSubstractThirty_ThenResultShouldBeNinety() {
+        calculator.addElement(number: 10)
+        calculator.addOperator(calcOperator: "+")
+        calculator.addElement(number: 79)
+        calculator.addOperator(calcOperator: "+")
+        calculator.addElement(number: 31)
+        calculator.addOperator(calcOperator: "-")
+        calculator.addElement(number: 30)
+        calculator.tappedEqualButton()
+
+        XCTAssertEqual(calculator.finalResult, "90")
     }
 
     func testGivenUserPressingEqual_WhenSeventyFiveIsMultipliedByThirtyAndMultipliedByAHundred_ThenResultShouldBeFourThousandAndFiveHundred() {
@@ -138,6 +151,19 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 5)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.canAddOperator, false)
+        XCTAssertEqual(calculator.finalResult, "60")
+    }
+
+    func testGivenUserPressingEqual_WhenTwoIsAddedToThreeEqualIsPressedThenTheOperationIsDoneAgain_ThenResultShouldBeFive() {
+        calculator.addElement(number: 3)
+        calculator.addOperator(calcOperator: "+")
+        calculator.addElement(number: 2)
+        calculator.tappedEqualButton()
+        calculator.addElement(number: 3)
+        calculator.addOperator(calcOperator: "+")
+        calculator.addElement(number: 2)
+        calculator.tappedEqualButton()
+
+        XCTAssertEqual(calculator.finalResult, "5")
     }
 }

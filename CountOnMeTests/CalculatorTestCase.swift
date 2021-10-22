@@ -151,7 +151,7 @@ class CalculatorTestCase: XCTestCase {
         calculator.addElement(number: 5)
         calculator.tappedEqualButton()
 
-        XCTAssertEqual(calculator.finalResult, "60")
+        XCTAssertThrowsError(try calculator.expressionIsCorrect)
     }
 
     func testGivenUserPressingEqual_WhenTwoIsAddedToThreeEqualIsPressedThenTheOperationIsDoneAgain_ThenResultShouldBeFive() {
@@ -165,5 +165,17 @@ class CalculatorTestCase: XCTestCase {
         calculator.tappedEqualButton()
 
         XCTAssertEqual(calculator.finalResult, "5")
+    }
+
+    func testGivenUserPressingEqual_WhenTwoIsAddedToThreeEqualIsPressedThenTwoIsAdded_ThenResultShouldBeSeven() {
+        calculator.addElement(number: 3)
+        calculator.addOperator(calcOperator: "+")
+        calculator.addElement(number: 2)
+        calculator.tappedEqualButton()
+        calculator.addOperator(calcOperator: "+")
+        calculator.addElement(number: 2)
+        calculator.tappedEqualButton()
+
+        XCTAssertEqual(calculator.finalResult, "7")
     }
 }

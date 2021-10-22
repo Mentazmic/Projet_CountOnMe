@@ -13,6 +13,7 @@ class Calculator {
     var elements: [String] = []
 
     var finalResult: String = "0"
+    var emptyArrayTotal : String = ""
     var equalIsPressed: Bool = false
 
 
@@ -21,6 +22,7 @@ class Calculator {
     func addElement(number: Float) {
         
         let elementsStringToNumber = number.clean
+        emptyArray()
 
         if elements.last == "+" || elements.last == "-" || elements.last == "*" || elements.last == "/" || elements.last == nil {
             elements.append(elementsStringToNumber)
@@ -47,9 +49,18 @@ class Calculator {
     }
 
     func addOperator(calcOperator: String) {
+        emptyArray()
         if canAddOperator {
             elements.append(calcOperator)
         }
+    }
+
+    func calcMultiplicativeGroup {
+
+    }
+
+    func calcAdditiveGroup {
+
     }
 
     func tappedEqualButton() {
@@ -64,8 +75,8 @@ class Calculator {
         var rightIndex = 2
 
         while rightIndex < operationsToReduce.count {
-            // Le checker sert à vérifier si l'opération est une multiplication, une division ou non.
-            var checker = false
+            // Le checker sert à vérifier si l'opération est une multiplication, une division ou non
+            var priorityChecker = false
 
             let left = Float(operationsToReduce[leftIndex])!
             let operand = operationsToReduce[operatorIndex]
@@ -78,16 +89,15 @@ class Calculator {
             switch operand {
             case "/": result = left / right
             case "*": result = left * right
-            default : checker = true
+            default : priorityChecker = true
                 break
             }
-            // Si l'opération n'est pas une multiplication ou une division on incrémente L O R de deux de sortes à ce qu'à la prochaine boucle on commence deux crans plus loins
-            if checker {
-                //operationsToReduce = Array(operationsToReduce.dropFirst(2))
+            // Si l'opération n'est pas une multiplication ou une division on incrémente les index de deux de sorte à ce qu'à la prochaine boucle on commence deux crans plus loin
+            if priorityChecker {
                 leftIndex += 2
                 operatorIndex += 2
                 rightIndex += 2
-                checker = false
+                priorityChecker = false
             } else {
                 // Pour supprimer l'opération en cours en un résultat d'une multiplication ou d'une division on supprime l'opérateur et le deuxième terme puis on transformer le premier terme par le resultat.
                 operationsToReduce.remove(at: rightIndex)
@@ -95,7 +105,7 @@ class Calculator {
                 operationsToReduce[leftIndex] = result.clean
             }
         }
-        // A la fin de la boucle on se retrouve avec une formule sans multiplication ni division.
+        // A la fin de la boucle on se retrouve avec une formule sans multiplication ni division
 
         //Si le tableau ne possède qu'un seul élément, on définit le total ici
         if operationsToReduce.count == 1 {
@@ -120,17 +130,25 @@ class Calculator {
             operationsToReduce = Array(operationsToReduce.dropFirst(2))
             operationsToReduce[0] = result.clean
             total = result
+            emptyArrayTotal = String(result)
         }
         finalResult = total.clean
-        //equalIsPressed = true
+        equalIsPressed = true
     }
 
     //Si le prochain input après un calcul est un chiffre, vider le tableau, sinon continuer
-//    func emptyArray() {
-//        while equalIsPressed == true {
-//            if elements[2]
-//        }
-//    }
+    func emptyArray() {
+        while equalIsPressed == true {
+            if elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"{
+                elements.removeAll()
+                equalIsPressed = false
+            } else {
+                elements.removeAll()
+                elements.append(emptyArrayTotal)
+                equalIsPressed = false
+            }
+        }
+    }
 }
 // MARK: - Extension
 

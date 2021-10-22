@@ -144,15 +144,15 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(calculator.finalResult, "602")
     }
 
-    func testGivenPressingEqual_WhenTwelveIsMultipliedAndThenDividedByFive_ThenTheProgramShouldReturnAnError () {
-        calculator.addElement(number: 12)
-        calculator.addOperator(calcOperator: "*")
-        calculator.addOperator(calcOperator: "/")
-        calculator.addElement(number: 5)
-        calculator.tappedEqualButton()
-
-        XCTAssertThrowsError(try calculator.expressionIsCorrect)
-    }
+//    func testGivenPressingEqual_WhenTwelveIsMultipliedAndThenDividedByFive_ThenTheProgramShouldReturnAnError () {
+//        calculator.addElement(number: 12)
+//        calculator.addOperator(calcOperator: "*")
+//        calculator.addOperator(calcOperator: "/")
+//        calculator.addElement(number: 5)
+//        calculator.tappedEqualButton()
+//
+//        XCTAssertThrowsError(try calculator.expressionIsCorrect)
+//    }
 
     func testGivenUserPressingEqual_WhenTwoIsAddedToThreeEqualIsPressedThenTheOperationIsDoneAgain_ThenResultShouldBeFive() {
         calculator.addElement(number: 3)

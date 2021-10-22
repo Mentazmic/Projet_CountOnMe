@@ -47,6 +47,11 @@ class ViewController: UIViewController {
         if calculator.canAddOperator {
             textView.text.append(" + ")
             calculator.addOperator(calcOperator: "+")
+        } else if calculator.canAddOperator && calculator.isOperationStillRunning == true {
+            textView.text.removeAll()
+            textView.text.append("\(calculator.finalResult) + ")
+            calculator.addOperator(calcOperator: "+")
+            calculator.isOperationStillRunning = false
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))

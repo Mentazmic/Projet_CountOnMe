@@ -30,10 +30,25 @@ class Calculator {
         return elements.count >= 3
     }
 
-    var canAddOperator: Bool {
+    var canAddOperator: Bool{
         continueOperation()
         return elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"
     }
+
+    enum CalcError: Error {
+        case notEnoughElements
+        case expressionIsIncorrect
+    }
+//
+//    func checkIfOperationValid() throws {
+//        if !canAddOperator {
+//            throw CalcError.operationIsIncorrect
+//        }
+//
+//        if !expressionHaveEnoughElement {
+//            throw CalcError.expressionIsIncorrect
+//        }
+//    }
 
     // MARK: - Functions
     func addElement(number: Float) {
@@ -54,20 +69,22 @@ class Calculator {
         // saisie opérateur : elements.last -> si opérateur -> erreur
     }
 
-    func addOperator(calcOperator: String) {
+    func addOperator(calcOperator: String) throws {
         if canAddOperator {
             elements.append(calcOperator)
+        } else {
+            throw CalcError.expressionIsIncorrect
         }
     }
 
-    func defineTotalIfElementsContainsOneEntry() {
+    private func defineTotalIfElementsContainsOneEntry() {
         if elements.count == 1 {
             total = Float(elements[0])!
         }
     }
 
     //Si le prochain input après un calcul est un chiffre, vider le tableau, sinon continuer
-    func checkIfNextInputIsANumberAfterOperationIsDone() {
+    private func checkIfNextInputIsANumberAfterOperationIsDone() {
         while equalIsPressed == true {
             if elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"{
                 elements.removeAll()
@@ -77,7 +94,7 @@ class Calculator {
         }
     }
 
-    func continueOperation() {
+    private func continueOperation() {
         while equalIsPressed == true {
             if elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"{
                 equalIsPressed = false
@@ -86,7 +103,7 @@ class Calculator {
         }
     }
 
-    func calcMultiplicativeGroup() {
+    private func calcMultiplicativeGroup() {
         while rightIndex < elements.count {
             var isNextOperatorFromMultiplicativeGroup = false
             let left = Float(elements[leftIndex])!
@@ -114,7 +131,7 @@ class Calculator {
         }
     }
 
-    func calcAdditiveGroup() {
+    private func calcAdditiveGroup() {
         while elements.count > 1 {
             let left = Float(elements[0])!
             let operand = elements[1]

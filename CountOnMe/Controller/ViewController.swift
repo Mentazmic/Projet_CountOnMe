@@ -44,15 +44,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        if calculator.canAddOperator {
+        do {
+            try calculator.addOperator(calcOperator: "+")
             textView.text.append(" + ")
-            calculator.addOperator(calcOperator: "+")
-        } else if calculator.canAddOperator && calculator.isOperationStillRunning == true {
-            textView.text.removeAll()
-            textView.text.append("\(calculator.finalResult) + ")
-            calculator.addOperator(calcOperator: "+")
-            calculator.isOperationStillRunning = false
-        } else {
+        } catch {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alertVC, animated: true, completion: nil)
@@ -60,10 +55,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        if calculator.canAddOperator {
+        do {
+            try calculator.addOperator(calcOperator: "-")
             textView.text.append(" - ")
-            calculator.addOperator(calcOperator: "-")
-        } else {
+        } catch {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alertVC, animated: true, completion: nil)
@@ -71,10 +66,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
-        if calculator.canAddOperator {
+        do {
+            try calculator.addOperator(calcOperator: "*")
             textView.text.append(" * ")
-            calculator.addOperator(calcOperator: "*")
-        } else {
+        } catch {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alertVC, animated: true, completion: nil)
@@ -82,10 +77,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
-        if calculator.canAddOperator {
+        do {
+            try calculator.addOperator(calcOperator: "/")
             textView.text.append(" / ")
-            calculator.addOperator(calcOperator: "/")
-        } else {
+        } catch {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alertVC, animated: true, completion: nil)

@@ -38,6 +38,7 @@ class Calculator {
     enum CalcError: Error {
         case notEnoughElements
         case expressionIsIncorrect
+        case divisionByZero
     }
 //
 //    func checkIfOperationValid() throws {
@@ -83,6 +84,14 @@ class Calculator {
         }
     }
 
+    private func preventDivisionByZero() throws {
+        if elements[operatorIndex] == "/" {
+            if elements[rightIndex] == "0" || elements[leftIndex] == "0" {
+                throw CalcError.divisionByZero
+            }
+        }
+    }
+
     //Si le prochain input après un calcul est un chiffre, vider le tableau, sinon continuer
     private func checkIfNextInputIsANumberAfterOperationIsDone() {
         while equalIsPressed == true {
@@ -103,57 +112,65 @@ class Calculator {
         }
     }
 
-    private func calcMultiplicativeGroup() {
-        while rightIndex < elements.count {
-            var isNextOperatorFromMultiplicativeGroup = false
-            let left = Float(elements[leftIndex])!
-            let operand = elements[operatorIndex]
-            let right = Float(elements[rightIndex])!
-            var result: Float = 0
-            
-            switch operand {
-            case "/": result = left / right
-            case "*": result = left * right
-            default : isNextOperatorFromMultiplicativeGroup = true
-                break
-            }
+    private func calcMultiplicativeGroup() throws {
+        if expressionHaveEnoughElement {
+            while rightIndex < elements.count {
+                var isNextOperatorFromMultiplicativeGroup = false
+                let left = Float(elements[leftIndex])!
+                let operand = elements[operatorIndex]
+                let right = Float(elements[rightIndex])!
+                var result: Float = 0
 
-            if isNextOperatorFromMultiplicativeGroup {
-                leftIndex += 2
-                operatorIndex += 2
-                rightIndex += 2
-                isNextOperatorFromMultiplicativeGroup = false
-            } else {
-                elements.remove(at: rightIndex)
-                elements.remove(at: operatorIndex)
-                elements[leftIndex] = result.clean
+                switch operand {
+                case "/": result = left / right
+                case "*": result = left * right
+                default : isNextOperatorFromMultiplicativeGroup = true
+                    break
+                }
+
+                if isNextOperatorFromMultiplicativeGroup {
+                    leftIndex += 2
+                    operatorIndex += 2
+                    rightIndex += 2
+                    isNextOperatorFromMultiplicativeGroup = false
+                } else {
+                    elements.remove(at: rightIndex)
+                    elements.remove(at: operatorIndex)
+                    elements[leftIndex] = result.clean
+                }
             }
+        } else {
+            throw CalcError.notEnoughElements
         }
     }
 
-    private func calcAdditiveGroup() {
-        while elements.count > 1 {
-            let left = Float(elements[0])!
-            let operand = elements[1]
-            let right = Float(elements[2])!
-            var result: Float = 0
+    private func calcAdditiveGroup() throws {
+        if expressionHaveEnoughElement {
+            while elements.count > 1 {
+                let left = Float(elements[0])!
+                let operand = elements[1]
+                let right = Float(elements[2])!
+                var result: Float = 0
 
-            switch operand {
-            case "+": result = left + right
-            case "-": result = left - right
-            default: fatalError("Unknown operator !")
+                switch operand {
+                case "+": result = left + right
+                case "-": result = left - right
+                default: fatalError("Unknown operator !")
+                }
+
+                elements = Array(elements.dropFirst(2))
+                elements[0] = result.clean
+                total = result
             }
-
-            elements = Array(elements.dropFirst(2))
-            elements[0] = result.clean
-            total = result
+        } else {
+            throw CalcError.notEnoughElements
         }
     }
 
-    func tappedEqualButton() {
-        calcMultiplicativeGroup()
+    func tappedEqualButton() throws {
+        try calcMultiplicativeGroup()
         defineTotalIfElementsContainsOneEntry()
-        calcAdditiveGroup()
+        try calcAdditiveGroup()
         finalResult = total.clean
         equalIsPressed = true
     }

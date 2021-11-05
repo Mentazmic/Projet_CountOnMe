@@ -88,22 +88,24 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedEqualButton(_ sender: UIButton) {
-        guard calculator.expressionIsCorrect else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            return self.present(alertVC, animated: true, completion: nil)
-        }
-        
-        guard calculator.expressionHaveEnoughElement else {
+        do {
+            try calculator.tappedEqualButton()
+            textView.text.append(" = \(calculator.finalResult)")
+        } catch Calculator.CalcError.notEnoughElements {
             let alertVC = UIAlertController(title: "Zéro!", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             return self.present(alertVC, animated: true, completion: nil)
+        } catch Calculator.CalcError.expressionIsIncorrect {
+            let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            return self.present(alertVC, animated: true, completion: nil)
+        } catch {
+            let alertVC = UIAlertController(title: "Zéro!", message: "Erreur", preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            return self.present(alertVC, animated: true, completion: nil)
         }
-
-        calculator.tappedEqualButton()
-        textView.text.append(" = \(calculator.finalResult)")
     }
-
+    
 }
 
 

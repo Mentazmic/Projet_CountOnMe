@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     
     
     // MARK: - Actions
+    //BAction for number key
     @IBAction func tappedNumberButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else {
             return
@@ -40,9 +41,9 @@ class ViewController: UIViewController {
         textView.text.append(numberText)
 
         let numberTextToNumberInt = Int(numberText) ?? 0
-        calculator.addElement(number: Float(numberTextToNumberInt))
+        calculator.addElement(number: Double(numberTextToNumberInt))
     }
-    
+    //IBAction for "add" key
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
         do {
             try calculator.addOperator(calcOperator: "+")
@@ -53,7 +54,7 @@ class ViewController: UIViewController {
             self.present(alertVC, animated: true, completion: nil)
         }
     }
-    
+    //IBAction for "subtract" key
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
         do {
             try calculator.addOperator(calcOperator: "-")
@@ -64,7 +65,7 @@ class ViewController: UIViewController {
             self.present(alertVC, animated: true, completion: nil)
         }
     }
-    
+    //IBAction for "multiply" key
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
         do {
             try calculator.addOperator(calcOperator: "*")
@@ -75,7 +76,7 @@ class ViewController: UIViewController {
             self.present(alertVC, animated: true, completion: nil)
         }
     }
-    
+    //IBAction for "divide" key
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
         do {
             try calculator.addOperator(calcOperator: "/")
@@ -86,7 +87,7 @@ class ViewController: UIViewController {
             self.present(alertVC, animated: true, completion: nil)
         }
     }
-    
+    //IBAction for "equal" key
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         do {
             try calculator.tappedEqualButton()

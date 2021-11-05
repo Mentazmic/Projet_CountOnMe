@@ -121,6 +121,7 @@ class CalculatorTestCase: XCTestCase {
             try calculator.tappedEqualButton()
             try calculator.addOperator(calcOperator: "+")
             calculator.addElement(number: 79)
+            try calculator.tappedEqualButton()
         } catch Calculator.CalcError.expressionIsIncorrect {
             print("Caught an error: expression is incorrect")
             caughtAnError = true

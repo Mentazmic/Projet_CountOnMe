@@ -56,16 +56,7 @@ class Calculator {
         case expressionIsIncorrect
         case divisionByZero
     }
-//
-//    func checkIfOperationValid() throws {
-//        if !canAddOperator {
-//            throw CalcError.operationIsIncorrect
-//        }
-//
-//        if !expressionHaveEnoughElement {
-//            throw CalcError.expressionIsIncorrect
-//        }
-//    }
+
 
     // MARK: - Functions
     func addElement(number: Float) {
@@ -82,8 +73,6 @@ class Calculator {
             elements.removeLast()
             elements.append(finalValue)
         }
-
-        // saisie opérateur : elements.last -> si opérateur -> erreur
     }
 
     func addOperator(calcOperator: String) throws {
@@ -127,7 +116,6 @@ class Calculator {
                 let left = Float(elements[leftIndex])!
                 let operand = elements[operatorIndex]
                 let right = Float(elements[rightIndex])!
-                //var result: Float = 0
 
                 try preventDivisionByZero()
 

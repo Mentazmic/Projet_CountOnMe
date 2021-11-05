@@ -142,6 +142,7 @@ class CalculatorTestCase: XCTestCase {
             calculator.addElement(number: 79)
             try calculator.addOperator(calcOperator: "+")
             calculator.addElement(number: 31)
+            try calculator.addOperator(calcOperator: "-")
             calculator.addElement(number: 30)
             try calculator.tappedEqualButton()
         } catch Calculator.CalcError.expressionIsIncorrect {

@@ -12,6 +12,7 @@ class Calculator {
     // MARK: - Properties
     var elements: [String] = []
 
+    var result: Float = 0
     var total : Float = 0
     var finalResult: String = "0"
     var leftIndex = 0
@@ -20,6 +21,7 @@ class Calculator {
 
     var equalIsPressed: Bool = false
     var isOperationStillRunning: Bool = false
+    var lastElementIsAnOperator: Bool = false
 
     // MARK: - Checkers
     var expressionIsCorrect: Bool {
@@ -33,6 +35,20 @@ class Calculator {
     var canAddOperator: Bool{
         continueOperation()
         return elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"
+    }
+
+    var checkOperator: Bool {
+        if elements.last == "+" || elements.last == "-" || elements.last == "*" || elements.last == "/" {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    private func preventDivisionByZero() throws {
+        if elements[operatorIndex] == "/" && elements[rightIndex] == "0" || elements[leftIndex] == "0" {
+                throw CalcError.divisionByZero
+        }
     }
 
     enum CalcError: Error {
@@ -84,14 +100,6 @@ class Calculator {
         }
     }
 
-    private func preventDivisionByZero() throws {
-        if elements[operatorIndex] == "/" {
-            if elements[rightIndex] == "0" || elements[leftIndex] == "0" {
-                throw CalcError.divisionByZero
-            }
-        }
-    }
-
     //Si le prochain input après un calcul est un chiffre, vider le tableau, sinon continuer
     private func checkIfNextInputIsANumberAfterOperationIsDone() {
         while equalIsPressed == true {
@@ -119,7 +127,9 @@ class Calculator {
                 let left = Float(elements[leftIndex])!
                 let operand = elements[operatorIndex]
                 let right = Float(elements[rightIndex])!
-                var result: Float = 0
+                //var result: Float = 0
+
+                try preventDivisionByZero()
 
                 switch operand {
                 case "/": result = left / right
@@ -150,12 +160,12 @@ class Calculator {
                 let left = Float(elements[0])!
                 let operand = elements[1]
                 let right = Float(elements[2])!
-                var result: Float = 0
+                //var result: Float = 0
 
                 switch operand {
                 case "+": result = left + right
                 case "-": result = left - right
-                default: fatalError("Unknown operator !")
+                default: break
                 }
 
                 elements = Array(elements.dropFirst(2))
@@ -163,7 +173,9 @@ class Calculator {
                 total = result
             }
         } else {
-            throw CalcError.notEnoughElements
+            if checkOperator {
+                throw CalcError.notEnoughElements
+            }
         }
     }
 

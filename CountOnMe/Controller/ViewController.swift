@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     
     
     // MARK: - Actions
-    //BAction for number key
+    //IBAction for number key
     @IBAction func tappedNumberButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else {
             return

@@ -15,6 +15,9 @@ class CalculatorTestCase: XCTestCase {
 
     // MARK: - Properties
     var calculator = Calculator()
+    var expressionIsIncorrect: Bool = false
+    var notEnoughElements: Bool = false
+    var divisionByZero: Bool = false
     var caughtAnError: Bool = false
 
     // MARK: - Setup
@@ -22,6 +25,9 @@ class CalculatorTestCase: XCTestCase {
     override func setUp() {
         super.setUp()
         calculator = Calculator()
+        expressionIsIncorrect = false
+        notEnoughElements = false
+        divisionByZero = false
         caughtAnError = false
     }
 
@@ -36,38 +42,28 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "+")
             calculator.addElement(number: 2)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
-
         XCTAssertEqual(calculator.finalResult, "5")
+        XCTAssertTrue(calculator.expressionIsCorrect)
     }
 
     func testGivenUserPressingEqual_WhenTenIsDividedByTwo_ThenResultShouldBeFive() {
         do {
-            calculator.addElement(number: 10)
+            calculator.addElement(number: 1)
+            calculator.addElement(number: 0)
             try calculator.addOperator(calcOperator: "/")
             calculator.addElement(number: 2)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
-
         XCTAssertEqual(calculator.finalResult, "5")
+        XCTAssertTrue(calculator.expressionIsCorrect)
+        XCTAssertFalse(calculator.checkOperator)
         XCTAssertFalse(caughtAnError)
     }
 
@@ -77,18 +73,12 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "*")
             calculator.addElement(number: 10)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
-
         XCTAssertEqual(calculator.finalResult, "20")
+        XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertFalse(caughtAnError)
     }
 
@@ -98,19 +88,12 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "*")
             calculator.addElement(number: 500)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
-
+        XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertEqual(calculator.finalResult, "50000000000")
-        //va echouer, remplacer float par double
     }
 
     func testGivenUserPressingEqual_WhenTenIsAddedToSeventyNineAndAddedToThirtyOne_ThenResultShouldBeAHundredAndTwenty() {
@@ -122,16 +105,12 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "+")
             calculator.addElement(number: 79)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
+        XCTAssertFalse(calculator.checkOperator)
+        XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertEqual(calculator.finalResult, "120")
         XCTAssertFalse(caughtAnError)
     }
@@ -156,6 +135,7 @@ class CalculatorTestCase: XCTestCase {
             print("Caught an error")
             caughtAnError = true
         }
+        XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertEqual(calculator.finalResult, "90")
         XCTAssertFalse(caughtAnError)
     }
@@ -168,16 +148,11 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "*")
             calculator.addElement(number: 2)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
+        XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertEqual(calculator.finalResult, "4500")
     }
 
@@ -187,16 +162,11 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "/")
             calculator.addElement(number: 2)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch {
+        }  catch {
             print("Caught an error")
             caughtAnError = true
         }
+        XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertEqual(calculator.finalResult, "2.5")
         XCTAssertFalse(caughtAnError)
     }
@@ -209,16 +179,11 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "/")
             calculator.addElement(number: 2)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
+        XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertEqual(calculator.finalResult, "5")
         XCTAssertFalse(caughtAnError)
     }
@@ -233,16 +198,11 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "*")
             calculator.addElement(number: 3)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
+        XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertEqual(calculator.finalResult, "28")
         XCTAssertFalse(caughtAnError)
     }
@@ -255,18 +215,12 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "*")
             calculator.addElement(number: 50)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
-
         XCTAssertEqual(calculator.finalResult, "-598")
+        XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertFalse(caughtAnError)
     }
 
@@ -280,19 +234,13 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "+")
             calculator.addElement(number: 2)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
-
         XCTAssertEqual(calculator.finalResult, "5")
         XCTAssertFalse(caughtAnError)
+        XCTAssertFalse(calculator.isOperationStillRunning)
     }
 
     func testGivenUserPressingEqual_WhenTwoIsAddedToAnOngoingOperation_ThenResultShouldBeSeven() {
@@ -304,18 +252,14 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "+")
             calculator.addElement(number: 2)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
+        XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertEqual(calculator.finalResult, "7")
         XCTAssertFalse(caughtAnError)
+        XCTAssertTrue(calculator.isOperationStillRunning)
     }
 
     func testGivenPressingEqual_WhenTwoOperatorsAreAdded_ThenTheProgramShouldReturnAnError () {
@@ -326,15 +270,12 @@ class CalculatorTestCase: XCTestCase {
             calculator.addElement(number: 12)
         } catch Calculator.CalcError.expressionIsIncorrect {
             print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
+            expressionIsIncorrect = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
-        XCTAssertTrue(caughtAnError)
+        XCTAssertTrue(expressionIsIncorrect)
     }
 
     func testGivenPressingEqual_WhenTheresNotEnoughElementsAddition_ThenTheProgramShouldReturnAnError () {
@@ -347,17 +288,14 @@ class CalculatorTestCase: XCTestCase {
             try calculator.tappedEqualButton()
             calculator.addElement(number: 2)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch Calculator.CalcError.notEnoughElements {
             print("Caught an error: expression is incorrect")
-            caughtAnError = true
+            notEnoughElements = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
-        XCTAssertTrue(caughtAnError)
+        XCTAssertTrue(notEnoughElements)
     }
 
     func testGivenPressingEqual_WhenTheresNotEnoughElementsMultiplication_ThenTheProgramShouldReturnAnError () {
@@ -381,6 +319,7 @@ class CalculatorTestCase: XCTestCase {
             caughtAnError = true
         }
         XCTAssertTrue(caughtAnError)
+        XCTAssertTrue(calculator.checkOperator)
     }
 
     func testGivenPressingEqual_WhenANumberIsDividedByZero_ThenProgramShouldReturnError () {
@@ -389,19 +328,13 @@ class CalculatorTestCase: XCTestCase {
             try calculator.addOperator(calcOperator: "/")
             calculator.addElement(number: 0)
             try calculator.tappedEqualButton()
-        } catch Calculator.CalcError.expressionIsIncorrect {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
-        } catch Calculator.CalcError.notEnoughElements {
-            print("Caught an error: expression is incorrect")
-            caughtAnError = true
         } catch Calculator.CalcError.divisionByZero {
             print("Caught an error: divisionByZero")
-            caughtAnError = true
+            divisionByZero = true
         } catch {
             print("Caught an error")
-            caughtAnError = true
+            caughtAnError = false
         }
-        XCTAssertTrue(caughtAnError)
+        XCTAssertTrue(divisionByZero)
     }
 }

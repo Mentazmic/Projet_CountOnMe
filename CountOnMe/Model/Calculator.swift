@@ -37,15 +37,18 @@ class Calculator {
     var expressionIsCorrect: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"
     }
+    
     //checks if there's enough elements to do an operation
     var expressionHaveEnoughElement: Bool {
         return elements.count >= 3
     }
+
     //checks if an operator can be added
     var canAddOperator: Bool{
         continueOperation()
         return elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"
     }
+
     //checks if the last item of elements is an operator
     var checkOperator: Bool {
         if elements.last == "+" || elements.last == "-" || elements.last == "*" || elements.last == "/" {
@@ -54,12 +57,14 @@ class Calculator {
             return false
         }
     }
+
     //prevents any division by zero
     private func preventDivisionByZero() throws {
         if elements[operatorIndex] == "/" && elements[rightIndex] == "0" || elements[leftIndex] == "0" {
                 throw CalcError.divisionByZero
         }
     }
+
     //error cases
     enum CalcError: Error {
         case notEnoughElements
@@ -85,6 +90,7 @@ class Calculator {
             elements.append(finalValue)
         }
     }
+
     //adds an operator to the array
     func addOperator(calcOperator: String) throws {
         if canAddOperator {
@@ -93,6 +99,7 @@ class Calculator {
             throw CalcError.expressionIsIncorrect
         }
     }
+
     //checks if elements contains only one element, and applies it's value to total
     private func defineTotalIfElementsContainsOneEntry() {
         if elements.count == 1 {
@@ -110,6 +117,7 @@ class Calculator {
             }
         }
     }
+
     //checks if the user continues to operate after pressing equal
     private func continueOperation() {
         while equalIsPressed == true {
@@ -119,6 +127,7 @@ class Calculator {
             }
         }
     }
+
     //processes all operations from additive group
     private func calcMultiplicativeGroup() throws {
         if expressionHaveEnoughElement {
@@ -152,6 +161,7 @@ class Calculator {
             throw CalcError.notEnoughElements
         }
     }
+
     //processes all operations from additive group
     private func calcAdditiveGroup() throws {
         if expressionHaveEnoughElement {
@@ -159,7 +169,6 @@ class Calculator {
                 let left = Double(elements[0])!
                 let operand = elements[1]
                 let right = Double(elements[2])!
-                //var result: Float = 0
 
                 switch operand {
                 case "+": result = left + right
@@ -177,6 +186,7 @@ class Calculator {
             }
         }
     }
+
     //when user taps equal button
     func tappedEqualButton() throws {
         try calcMultiplicativeGroup()
@@ -188,7 +198,7 @@ class Calculator {
 }
 // MARK: - Extension
 
-//truncates decimals if needed
+//converts from Double type to String type and truncates decimals when needed
 extension Double {
     var clean: String {
         return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)

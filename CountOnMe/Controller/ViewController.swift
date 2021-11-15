@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     
     // MARK: - Actions
     //IBAction for number key
-    @IBAction func tappedNumberButton(_ sender: UIButton) {
+    @IBAction private func tappedNumberButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else {
             return
         }
@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         calculator.addElement(number: Double(numberTextToNumberInt))
     }
     //IBAction for "add" key
-    @IBAction func tappedAdditionButton(_ sender: UIButton) {
+    @IBAction private func tappedAdditionButton(_ sender: UIButton) {
         do {
             try calculator.addOperator(calcOperator: "+")
             textView.text.append(" + ")
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
         }
     }
     //IBAction for "subtract" key
-    @IBAction func tappedSubstractionButton(_ sender: UIButton) {
+    @IBAction private func tappedSubstractionButton(_ sender: UIButton) {
         do {
             try calculator.addOperator(calcOperator: "-")
             textView.text.append(" - ")
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
         }
     }
     //IBAction for "multiply" key
-    @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
+    @IBAction private func tappedMultiplicationButton(_ sender: UIButton) {
         do {
             try calculator.addOperator(calcOperator: "*")
             textView.text.append(" * ")
@@ -77,7 +77,7 @@ class ViewController: UIViewController {
         }
     }
     //IBAction for "divide" key
-    @IBAction func tappedDivisionButton(_ sender: UIButton) {
+    @IBAction private func tappedDivisionButton(_ sender: UIButton) {
         do {
             try calculator.addOperator(calcOperator: "/")
             textView.text.append(" / ")
@@ -88,7 +88,7 @@ class ViewController: UIViewController {
         }
     }
     //IBAction for "equal" key
-    @IBAction func tappedEqualButton(_ sender: UIButton) {
+    @IBAction private func tappedEqualButton(_ sender: UIButton) {
         do {
             try calculator.tappedEqualButton()
             textView.text.append(" = \(calculator.finalResult)")

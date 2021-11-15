@@ -36,7 +36,7 @@ class CalculatorTestCase: XCTestCase {
 
     // MARK: - Tests
 
-    func testGivenUserPressingEqual_WhenTwoIsAddedToThree_ThenResultShouldBeFive() {
+    func testGivenUserPressingEqual_WhenDoingSimpleAddition_ThenResultShouldBeFive() {
         do {
             calculator.addElement(number: 3)
             try calculator.addOperator(calcOperator: "+")
@@ -48,6 +48,22 @@ class CalculatorTestCase: XCTestCase {
         }
         XCTAssertEqual(calculator.finalResult, "5")
         XCTAssertTrue(calculator.expressionIsCorrect)
+        XCTAssertFalse(calculator.checkOperator)
+    }
+
+    func testGivenUserPressingEqual_WhenDoingSimpleSubstraction_ThenResultShouldBeTwelve() {
+        do {
+            calculator.addElement(number: 17)
+            try calculator.addOperator(calcOperator: "-")
+            calculator.addElement(number: 5)
+            try calculator.tappedEqualButton()
+        } catch {
+            print("Caught an error")
+            caughtAnError = true
+        }
+        XCTAssertEqual(calculator.finalResult, "12")
+        XCTAssertTrue(calculator.expressionIsCorrect)
+        XCTAssertFalse(calculator.checkOperator)
     }
 
     func testGivenUserPressingEqual_WhenTenIsDividedByTwo_ThenResultShouldBeFive() {
@@ -78,6 +94,7 @@ class CalculatorTestCase: XCTestCase {
             caughtAnError = true
         }
         XCTAssertEqual(calculator.finalResult, "20")
+        XCTAssertFalse(calculator.checkOperator)
         XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertFalse(caughtAnError)
     }
@@ -336,5 +353,6 @@ class CalculatorTestCase: XCTestCase {
             caughtAnError = false
         }
         XCTAssertTrue(divisionByZero)
+        XCTAssertFalse(calculator.checkOperator)
     }
 }

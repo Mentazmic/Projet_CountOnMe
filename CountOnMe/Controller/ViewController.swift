@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
 
@@ -24,8 +24,12 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         calculator = Calculator()
+        self.textView.delegate = self
     }
-    
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
     // MARK: - Actions
     //IBAction for number key

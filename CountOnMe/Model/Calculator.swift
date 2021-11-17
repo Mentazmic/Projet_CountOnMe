@@ -25,12 +25,19 @@ class Calculator {
     var operatorIndex = 1
     var rightIndex = 2
 
+    private func resetIndex(){
+        leftIndex = 0
+        operatorIndex = 1
+        rightIndex = 2
+    }
     //has the equal been pressed?
     var equalIsPressed: Bool = false
     //is the operation still running?
     var isOperationStillRunning: Bool = false
     //is the last index of elements an operator?
     var lastElementIsAnOperator: Bool = false
+
+    var isNextOperatorFromMultiplicativeGroup = false
 
     // MARK: - Checkers
     //checks if the expression is valid
@@ -62,6 +69,12 @@ class Calculator {
     private func preventDivisionByZero() throws {
         if elements[operatorIndex] == "/" && elements[rightIndex] == "0" || elements[leftIndex] == "0" {
                 throw CalcError.divisionByZero
+        }
+    }
+
+    private func checkElements() throws {
+        if elements.first == "+" || elements.first == "-" || elements.first == "*" || elements.first == "/"{
+            throw CalcError.expressionIsIncorrect
         }
     }
 
@@ -112,8 +125,10 @@ class Calculator {
         while equalIsPressed == true {
             if elements.last != "+" && elements.last != "-" && elements.last != "*" && elements.last != "/"{
                 elements.removeAll()
+                resetIndex()
                 equalIsPressed = false
                 isOperationStillRunning = false
+                isNextOperatorFromMultiplicativeGroup = false
             }
         }
     }
@@ -132,7 +147,7 @@ class Calculator {
     private func calcMultiplicativeGroup() throws {
         if expressionHaveEnoughElement {
             while rightIndex < elements.count {
-                var isNextOperatorFromMultiplicativeGroup = false
+
                 let left = Double(elements[leftIndex])!
                 let operand = elements[operatorIndex]
                 let right = Double(elements[rightIndex])!
@@ -189,6 +204,7 @@ class Calculator {
 
     //when user taps equal button
     func tappedEqualButton() throws {
+        try checkElements()
         try calcMultiplicativeGroup()
         defineTotalIfElementsContainsOneEntry()
         try calcAdditiveGroup()

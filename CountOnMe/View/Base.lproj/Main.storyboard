@@ -113,7 +113,7 @@
                                 <rect key="frame" x="15" y="433" width="360" height="206"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="U2a-5D-kgc">
-                                        <rect key="frame" x="0.0" y="0.0" width="97.333333333333329" height="152"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="97.333333333333329" height="206"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Raa-av-x4n">
                                                 <rect key="frame" x="0.0" y="0.0" width="97.333333333333329" height="44"/>
@@ -146,6 +146,18 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="tappedNumberButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="Ovc-Qq-WYV"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eda-eG-oyn">
+                                                <rect key="frame" x="0.0" y="162" width="97.333333333333329" height="44"/>
+                                                <color key="backgroundColor" red="0.64392107730000003" green="0.61756938699999997" blue="0.6093915701" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="C">
+                                                    <color key="titleColor" red="0.99991279840000002" green="1" blue="0.99988144639999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="tappedCButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="8IR-94-5jJ"/>
                                                 </connections>
                                             </button>
                                         </subviews>

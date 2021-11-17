@@ -320,6 +320,25 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertTrue(calculator.isOperationStillRunning)
     }
 
+    func testGivenUserPressingEqual_WhenCKeyIsPressed_ThenResultShouldBeFiftySeven() {
+        do {
+            calculator.addElement(number: 7897)
+            try calculator.addOperator(calcOperator: "+")
+            calculator.addElement(number: 2465464)
+            try calculator.tappedCancelButton()
+            calculator.addElement(number: 35)
+            try calculator.addOperator(calcOperator: "+")
+            calculator.addElement(number: 22)
+            try calculator.tappedEqualButton()
+        } catch {
+            print("Caught an error")
+            caughtAnError = true
+        }
+        XCTAssertTrue(calculator.expressionIsCorrect)
+        XCTAssertEqual(calculator.finalResult, "57")
+        XCTAssertFalse(caughtAnError)
+    }
+
     func testGivenPressingEqual_WhenTwoOperatorsAreAdded_ThenTheProgramShouldReturnAnError () {
         do {
             calculator.addElement(number: 12)

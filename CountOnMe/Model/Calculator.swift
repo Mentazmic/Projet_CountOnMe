@@ -25,11 +25,6 @@ class Calculator {
     var operatorIndex = 1
     var rightIndex = 2
 
-    private func resetIndex(){
-        leftIndex = 0
-        operatorIndex = 1
-        rightIndex = 2
-    }
     //has the equal been pressed?
     var equalIsPressed: Bool = false
     //is the operation still running?
@@ -70,6 +65,12 @@ class Calculator {
         if elements[operatorIndex] == "/" && elements[rightIndex] == "0" || elements[leftIndex] == "0" {
                 throw CalcError.divisionByZero
         }
+    }
+
+    private func resetIndex(){
+        leftIndex = 0
+        operatorIndex = 1
+        rightIndex = 2
     }
 
     private func checkElements() throws {
@@ -210,6 +211,14 @@ class Calculator {
         try calcAdditiveGroup()
         finalResult = total.clean
         equalIsPressed = true
+    }
+
+    func tappedCancelButton() throws {
+        elements.removeAll()
+        resetIndex()
+        equalIsPressed = false
+        isOperationStillRunning = false
+        isNextOperatorFromMultiplicativeGroup = false
     }
 }
 // MARK: - Extension

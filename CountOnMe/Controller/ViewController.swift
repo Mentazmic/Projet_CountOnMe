@@ -111,6 +111,16 @@ class ViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    @IBAction func tappedCButton(_ sender: UIButton) {
+        do {
+            try calculator.tappedCancelButton()
+            textView.text.removeAll()
+        } catch {
+            let alertVC = UIAlertController(title: "Zéro!", message: "Rien à corriger!", preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alertVC, animated: true, completion: nil)
+        }
+    }
 }
 
 

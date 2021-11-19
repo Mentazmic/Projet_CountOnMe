@@ -55,20 +55,6 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertFalse(calculator.checkOperator)
     }
 
-//    func testGivenUserPressingEqual_WhenAddingWrongCharacter_ThenErrorIsThrown() {
-//        do {
-//            calculator.addElement(number: "G")
-//            try calculator.addOperator(calcOperator: "+")
-//            calculator.addElement(number: 2)
-//            try calculator.tappedEqualButton()
-//        } catch Calculator.CalcError.incorrectCharacters {
-//            print("Caught an error: expression is incorrect")
-//            incorrectCharacters = true
-//        }
-//        XCTAssertTrue(calculator.C)
-//        XCTAssertFalse(calculator.checkOperator)
-//    }
-
     func testGivenUserPressingEqual_WhenDoingSimpleSubstraction_ThenResultShouldBeTwelve() {
         do {
             calculator.addElement(number: 17)
@@ -452,6 +438,23 @@ class CalculatorTestCase: XCTestCase {
             caughtAnError = false
         }
         XCTAssertTrue(expressionIsIncorrect)
+        XCTAssertFalse(calculator.checkOperator)
+    }
+
+    func testGivenUserPressingEqual_WhenAddingWrongCharacter_ThenErrorIsThrown() {
+        do {
+            calculator.elements.append("e")
+            try calculator.addOperator(calcOperator: "+")
+            calculator.addElement(number: 2)
+            try calculator.tappedEqualButton()
+        } catch Calculator.CalcError.incorrectCharacters {
+            print("Caught an error: incorrect character")
+            incorrectCharacters = true
+        } catch {
+            print("Caught an error")
+            caughtAnError = false
+        }
+        XCTAssertTrue(incorrectCharacters)
         XCTAssertFalse(calculator.checkOperator)
     }
 }

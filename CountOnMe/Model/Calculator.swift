@@ -67,6 +67,12 @@ class Calculator {
         }
     }
 
+    private func doubleLimitCheck() throws {
+        if total >= 999999999999999983222784 {
+            throw CalcError.valueError
+        }
+    }
+
     private func resetIndex(){
         leftIndex = 0
         operatorIndex = 1
@@ -84,6 +90,8 @@ class Calculator {
         case notEnoughElements
         case expressionIsIncorrect
         case divisionByZero
+        case incorrectCharacters
+        case valueError
     }
 
 
@@ -148,10 +156,11 @@ class Calculator {
     private func calcMultiplicativeGroup() throws {
         if expressionHaveEnoughElement {
             while rightIndex < elements.count {
-
-                let left = Double(elements[leftIndex])!
                 let operand = elements[operatorIndex]
-                let right = Double(elements[rightIndex])!
+
+                guard let left = Double(elements[leftIndex]), let right = Double(elements[rightIndex]) else {
+                    throw CalcError.incorrectCharacters
+                }
 
                 //checks if a value is divided by zero
                 try preventDivisionByZero()
@@ -210,6 +219,7 @@ class Calculator {
         defineTotalIfElementsContainsOneEntry()
         try calcAdditiveGroup()
         finalResult = total.clean
+        try doubleLimitCheck()
         equalIsPressed = true
     }
 

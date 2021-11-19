@@ -19,6 +19,8 @@ class CalculatorTestCase: XCTestCase {
     var notEnoughElements: Bool = false
     var divisionByZero: Bool = false
     var caughtAnError: Bool = false
+    var incorrectCharacters: Bool = true
+    var valueError: Bool = true
 
     // MARK: - Setup
 
@@ -29,6 +31,8 @@ class CalculatorTestCase: XCTestCase {
         notEnoughElements = false
         divisionByZero = false
         caughtAnError = false
+        incorrectCharacters = false
+        valueError = false
     }
 
     // MARK: - Helpers
@@ -50,6 +54,20 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertFalse(calculator.checkOperator)
     }
+
+//    func testGivenUserPressingEqual_WhenAddingWrongCharacter_ThenErrorIsThrown() {
+//        do {
+//            calculator.addElement(number: "G")
+//            try calculator.addOperator(calcOperator: "+")
+//            calculator.addElement(number: 2)
+//            try calculator.tappedEqualButton()
+//        } catch Calculator.CalcError.incorrectCharacters {
+//            print("Caught an error: expression is incorrect")
+//            incorrectCharacters = true
+//        }
+//        XCTAssertTrue(calculator.C)
+//        XCTAssertFalse(calculator.checkOperator)
+//    }
 
     func testGivenUserPressingEqual_WhenDoingSimpleSubstraction_ThenResultShouldBeTwelve() {
         do {
@@ -115,16 +133,19 @@ class CalculatorTestCase: XCTestCase {
 
     func testGivenUserPressingEqual_WhenTenTrillionsIsMultipliedByItself_ThenResultShouldBeRight() {
         do {
-            calculator.addElement(number: 1000000000000)
+            calculator.addElement(number: 1_000_000_000_000)
             try calculator.addOperator(calcOperator: "*")
-            calculator.addElement(number: 1000000000000)
+            calculator.addElement(number: 1_000_000_000_000)
             try calculator.tappedEqualButton()
+        } catch Calculator.CalcError.valueError {
+            print("Caught an error: expression is incorrect")
+            valueError = true
         } catch {
             print("Caught an error")
             caughtAnError = true
         }
         XCTAssertTrue(calculator.expressionIsCorrect)
-        XCTAssertEqual(calculator.finalResult, "1e+24")
+        XCTAssertTrue(valueError)
     }
 
     func testGivenUserPressingEqual_WhenTenIsAddedToSeventyNineAndAddedToThirtyOne_ThenResultShouldBeAHundredAndTwenty() {
